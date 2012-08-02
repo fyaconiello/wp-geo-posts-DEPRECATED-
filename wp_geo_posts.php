@@ -72,7 +72,7 @@ if(!class_exists('WP_Geo_Posts'))
 		public function init_settings()
 		{
 			// register the settings for this plugin
-			//register_setting('wpgeoposts-group', 'username');
+			register_setting('wpgeoposts-group', 'apiKey');
 		} // END public function init_custom_settings()
 		
 		/**
@@ -122,7 +122,7 @@ if(class_exists('WP_Geo_Posts'))
 		// Add the settings link to the plugins page
 		function plugin_settings_link($links)
 		{ 
-		  $settings_link = '<a href="options-general.php?page=bullhorn">Settings</a>'; 
+		  $settings_link = '<a href="options-general.php?page=wp_geo_posts">Settings</a>'; 
 		  array_unshift($links, $settings_link); 
 		  return $links; 
 		}

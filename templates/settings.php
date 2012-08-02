@@ -6,8 +6,11 @@
 
 <table class="form-table">  
   <tr valign="top">
-  	<th scope="row">API Key</th>
-  	<td><input type="text" name="apiKey" value="<?php echo get_option('apiKey'); ?>" /></td>
+  	<th scope="row">Google Maps API Key</th>
+  	<td>
+			<input type="text" name="apiKey" value="<?php echo get_option('apiKey'); ?>" />
+			<p><em>Go to <a href="https://developers.google.com/maps/documentation/javascript/tutorial#api_key">https://developers.google.com/maps/documentation/javascript/tutorial#api_key</a> to obtain an API key.</em></p>
+		</td>
   </tr>
 </table>
     
