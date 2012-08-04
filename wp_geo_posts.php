@@ -112,8 +112,35 @@ if(!class_exists('WP_Geo_Posts'))
 				$geo_post_types = json_decode($geo_post_types);
 			  if(in_array($_POST['post_type'], $geo_post_types))
 			  {
+					if(empty($_POST['wp_gp_location']))
+					{
+						$wpdb->insert( 
+							$wpdb->postmeta, 
+							array( 
+								'post_id' 		=> $post_id, 
+								'meta_key' 		=> 'wp_gp_location',
+								'meta_value' 	=> ""
+							)
+						);
+						$wpdb->insert( 
+							$wpdb->postmeta, 
+							array( 
+								'post_id' 		=> $post_id, 
+								'meta_key' 		=> 'wp_gp_latitude',
+								'meta_value' 	=> "" 
+							)
+						);
+						$wpdb->insert( 
+							$wpdb->postmeta, 
+							array( 
+								'post_id' 		=> $post_id, 
+								'meta_key' 		=> 'wp_gp_longitude',
+								'meta_value' 	=> ""
+							)
+						);
+					}
 					// If a location was posted that is different from the previously saved location
-					if(!empty($_POST['wp_gp_location']) && $_POST['wp_gp_location'] != get_post_meta($post_id, 'wp_gp_location', true))
+					elseif(!empty($_POST['wp_gp_location']) && $_POST['wp_gp_location'] != get_post_meta($post_id, 'wp_gp_location', true))
 					{
 						$location = $_POST['wp_gp_location'];
 						// Save the Location
@@ -172,7 +199,8 @@ if(!class_exists('WP_Geo_Posts'))
 		 */
 		public function init()
 		{
-			// Do nothing
+			// Import WP_GeoQuery class
+			require_once(sprintf("%s/query.php", dirname(__FILE__)));
 		} // END public static function activate
 
 		/**
