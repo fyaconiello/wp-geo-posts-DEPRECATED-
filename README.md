@@ -35,7 +35,7 @@ Latitude and Longitude are readonly attributes of the metabox. Their values are 
 
 #####WP_GeoQuery Usage
 
-Make a geo-aware query against the posts table. `WP_GeoQuery` accepts all arguments that `WP_Query` takes. `latitude` and `longitude` are optional parameters. If passed, `distance` is calculated and returned with each result. In addition to the regular field, each result returns `latitude`, `longitude`, and `location`.
+Make a geo-aware query against the posts table. `WP_GeoQuery` accepts all arguments that `WP_Query` takes. `latitude` and `longitude` are optional parameters. If passed, `distance` is calculated and returned with each result. In addition to the regular fields, each result returns `latitude`, `longitude`, and `location`.
 
 ```php
 <?php
@@ -46,15 +46,15 @@ $query = new WP_GeoQuery(array(
 ));
 foreach($query->posts as $post)
 {
-  echo " {$post->post_title}<br />\n";
+	echo " {$post->post_title}<br />\n";
 
 	// returned only if latitude and longitude are passed into WP_GeoQuery
-  echo " {$post->distance}<br />\n";
+	echo " {$post->distance}<br />\n";
 
 	// Always returned by WP_GeoQuery
-  echo " {$post->location}<br />\n";
-  echo " {$post->latitude}<br />\n";
-  echo " {$post->longitude}<br />\n";
+	echo " {$post->location}<br />\n";
+	echo " {$post->latitude}<br />\n";
+	echo " {$post->longitude}<br />\n";
 	echo "<br />\n";
 }
 ?>
