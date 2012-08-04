@@ -44,7 +44,7 @@ if(!class_exists('WP_GeoQuery'))
       
 			if(!empty($this->_search_latitude) && !empty($this->_search_longitude))
 			{
-				$fields .= sprintf(" ( 3959 * acos( 
+				$fields .= sprintf(", ( 3959 * acos( 
 						cos( radians(%s) ) * 
 						cos( radians( latitude.meta_value ) ) * 
 						cos( radians( longitude.meta_value ) - radians(%s) ) + 
@@ -53,8 +53,9 @@ if(!class_exists('WP_GeoQuery'))
 					) ) AS distance ", $this->_search_latitude, $this->_search_longitude, $this->_search_latitude);	
 			}
 			
-			$fields .= " latitude.meta_value AS latitude ";
-			$fields .= " longitude.meta_value AS longitude ";
+			$fields .= ", latitude.meta_value AS latitude ";
+			$fields .= ", longitude.meta_value AS longitude ";
+			$fields .= ", location.meta_value AS location ";
 			
 			return $fields;
 		} // END public function posts_join($join, $query)
@@ -68,6 +69,7 @@ if(!class_exists('WP_GeoQuery'))
       
 			$join .= " INNER JOIN {$wpdb->postmeta} AS latitude ON {$wpdb->posts}.ID = latitude.post_id ";
 			$join .= " INNER JOIN {$wpdb->postmeta} AS longitude ON {$wpdb->posts}.ID = longitude.post_id ";
+			$join .= " INNER JOIN {$wpdb->postmeta} AS location ON {$wpdb->posts}.ID = location.post_id ";
 			
 			return $join;
 		} // END public function posts_join($join, $query)
@@ -79,6 +81,7 @@ if(!class_exists('WP_GeoQuery'))
 		{
 			$where .= ' AND latitude.meta_key="wp_gp_latitude" ';
 			$where .= ' AND longitude.meta_key="wp_gp_longitude" ';
+			$where .= ' AND location.meta_key="wp_gp_location" ';
 			
 			return $where;
 		} // END public function posts_where($where)
@@ -90,7 +93,7 @@ if(!class_exists('WP_GeoQuery'))
 		{
 			if(!empty($this->_search_latitude) && !empty($this->_search_longitude))
 			{
-				$orderby .= " distance ASC ";
+				$orderby = " distance ASC, " . $orderby;
 			}
 			
 			return $orderby;
