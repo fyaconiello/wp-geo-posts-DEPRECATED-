@@ -9,6 +9,17 @@ A simple Wordpress plugin for adding geographic data to posts.
 2. Provides an easy to use interface for selecting which content types to apply the above meta values. *Note: this allows selection of built in types: page and post as well as any registered custom post types.*
 3. Provides `WP_GeoQuery` an extended `WP_Query` class for doing distance based and geo-aware queries.
 
+#####Coming Soon!
+
+* Add support for `within radius` option to WP_GeoQuery
+* Shortags for:
+ * Static Map - show one or more posts on a static map
+ * Dynamic Map
+  * Option to show radius as overlay
+  * Show one or more posts
+ * `Get Directions` link
+* Custom Markers by post type.
+
 ####Installation
 
 1. Upload the entire `wp-geo-posts` folder to the `/wp-content/plugins/` directory.
