@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Wp-geo-posts : A simple wordpress plugin for adding geodata to posts" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Wp-geo-posts</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/fyaconiello/wp-geo-posts">View on GitHub</a>
+
+          <h1 id="project_title">Wp-geo-posts</h1>
+          <h2 id="project_tagline">A simple wordpress plugin for adding geodata to posts</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/fyaconiello/wp-geo-posts/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/fyaconiello/wp-geo-posts/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>wp-geo-posts</h1>
+
+<p>A simple Wordpress plugin for adding geographic data to posts.</p>
+
+<h4>Features</h4>
+
+<ol>
+<li>Adds <code>location</code>, <code>latitude</code>, and <code>longitude</code> meta + metaboxes to any content type.</li>
+<li>Provides an easy to use interface for selecting which content types to apply the above meta values. <em>Note: this allows selection of built in types: page and post as well as any registered custom post types.</em>
+</li>
+<li>Provides <code>WP_GeoQuery</code> an extended <code>WP_Query</code> class for doing distance based and geo-aware queries.</li>
+</ol><h5>Coming Soon!</h5>
+
+<ul>
+<li>Add support for <code>within radius</code> option to WP_GeoQuery</li>
+<li>
+<code>Get Directions</code> link (utilizing Google Maps)</li>
+<li>Custom Markers by post type.</li>
+<li>Shortags for:
+
+<ul>
+<li>Static Map - show one or more posts on a static map</li>
+<li>Dynamic Map</li>
+<li>Option to show radius as overlay</li>
+<li>Show one or more posts</li>
+</ul>
+</li>
+</ul><h4>Installation</h4>
+
+<ol>
+<li>Upload the entire <code>wp-geo-posts</code> folder to the <code>/wp-content/plugins/</code> directory.</li>
+<li>Activate the plugin through the <code>Plugins</code> menu in WordPress.</li>
+</ol><h4>Setup</h4>
+
+<ol>
+<li>Click the <code>Settings</code> link on the plugin management page <strong>OR</strong> click the <code>WP GeoPosts</code> link from the Settings flyout menu.</li>
+<li>Generate a Google Maps API Key and enter it into the provided text input. <em>Note: this is optional and used for Google Maps API calls.</em>
+</li>
+<li>Select all of the content types that you wish to attach georelated content from the leftmost bank of choices and move them to the rightmost column.</li>
+<li>Submit the Form by clicking <code>Save Changes</code>.</li>
+</ol><h4>Usage</h4>
+
+<h5>Metaboxes</h5>
+
+<p>For every post type selected on the plugin settings page. That type's add/edit screens will have an additional metabox automatically added. Metadata that is added to each record:</p>
+
+<ul>
+<li>
+<strong>Location</strong> via <code>wp_gp_location</code>
+</li>
+<li>
+<strong>Latitude</strong> via <code>wp_gp_latitude</code>
+</li>
+<li>
+<strong>Longitude</strong> via <code>wp_gp_longitude</code>
+</li>
+</ul><p>Latitude and Longitude are readonly attributes of the metabox. Their values are automatically generated on  save via a call to Google's geoencoding api. </p>
+
+<h5>WP_GeoQuery Usage</h5>
+
+<p>Make a geo-aware query against the posts table. <code>WP_GeoQuery</code> accepts all arguments that <code>WP_Query</code> takes. <code>latitude</code> and <code>longitude</code> are optional parameters. If passed, <code>distance</code> is calculated and returned with each result. In addition to the regular fields, each result returns <code>latitude</code>, <code>longitude</code>, and <code>location</code>.</p>
+
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WP_GeoQuery</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">'latitude'</span> <span class="o">=&gt;</span> <span class="s1">'37.5160'</span><span class="p">,</span> <span class="c1">// User's Latitude (optional)</span>
+  <span class="s1">'longitude'</span> <span class="o">=&gt;</span> <span class="s1">'-77.5005'</span><span class="p">,</span> <span class="c1">// User's Longitude (optional)</span>
+  <span class="s1">'posts_per_page'</span> <span class="o">=&gt;</span> <span class="mi">25</span><span class="p">,</span> <span class="c1">// Any regular options available via WP_Query</span>
+<span class="p">));</span>
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">" </span><span class="si">{</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">post_title</span><span class="si">}</span><span class="s2">&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+
+    <span class="c1">// returned only if latitude and longitude are passed into WP_GeoQuery</span>
+    <span class="k">echo</span> <span class="s2">" </span><span class="si">{</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">distance</span><span class="si">}</span><span class="s2">&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+
+    <span class="c1">// Always returned by WP_GeoQuery</span>
+    <span class="k">echo</span> <span class="s2">" </span><span class="si">{</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">location</span><span class="si">}</span><span class="s2">&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">" </span><span class="si">{</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">latitude</span><span class="si">}</span><span class="s2">&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">" </span><span class="si">{</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">longitude</span><span class="si">}</span><span class="s2">&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br /&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Wp-geo-posts maintained by <a href="https://github.com/fyaconiello">fyaconiello</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
