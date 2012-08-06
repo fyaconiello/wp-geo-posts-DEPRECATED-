@@ -11,6 +11,7 @@ A simple Wordpress plugin for adding geographic data to posts.
 
 #####Coming Soon!
 
+* Custom Markers by post type.
 * Add support for `within radius` option to WP_GeoQuery
 * Shortags for:
  * Static Map - show one or more posts on a static map
@@ -18,7 +19,6 @@ A simple Wordpress plugin for adding geographic data to posts.
   * Option to show radius as overlay
   * Show one or more posts
  * `Get Directions` link
-* Custom Markers by post type.
 
 ####Installation
 
