@@ -39,7 +39,12 @@ if(!class_exists('WP_Geo_Posts'))
 			add_action('init', array(&$this, 'init'));
 			add_action('admin_init', array(&$this, 'admin_init'));
 			add_action('admin_menu', array(&$this, 'add_menu'));
-			add_action('save_post', array(&$this, 'save_post'));
+
+			# Save the post
+			#add_action('post_updated', array(&$this, 'save_post'));
+			#add_action('save_post', array(&$this, 'save_post'));
+			#add_action('publish_post', array(&$this, 'save_post'));
+			#add_action('edit_page_form', array(&$this, 'save_post'));
 		} // END public function __construct
 
 		/**
@@ -114,44 +119,16 @@ if(!class_exists('WP_Geo_Posts'))
 			  {
 					if(empty($_POST['wp_gp_location']))
 					{
-						$wpdb->insert( 
-							$wpdb->postmeta, 
-							array( 
-								'post_id' 		=> $post_id, 
-								'meta_key' 		=> 'wp_gp_location',
-								'meta_value' 	=> ""
-							)
-						);
-						$wpdb->insert( 
-							$wpdb->postmeta, 
-							array( 
-								'post_id' 		=> $post_id, 
-								'meta_key' 		=> 'wp_gp_latitude',
-								'meta_value' 	=> "" 
-							)
-						);
-						$wpdb->insert( 
-							$wpdb->postmeta, 
-							array( 
-								'post_id' 		=> $post_id, 
-								'meta_key' 		=> 'wp_gp_longitude',
-								'meta_value' 	=> ""
-							)
-						);
+						update_post_meta($post_id, 'wp_gp_location', '');
+						update_post_meta($post_id, 'wp_gp_latitude', '');
+						update_post_meta($post_id, 'wp_gp_longitude', '');
 					}
 					// If a location was posted that is different from the previously saved location
 					elseif(!empty($_POST['wp_gp_location']) && $_POST['wp_gp_location'] != get_post_meta($post_id, 'wp_gp_location', true))
 					{
 						$location = $_POST['wp_gp_location'];
 						// Save the Location
-						$wpdb->insert( 
-							$wpdb->postmeta, 
-							array( 
-								'post_id' 		=> $post_id, 
-								'meta_key' 		=> 'wp_gp_location',
-								'meta_value' 	=> $location
-							)
-						);
+						update_post_meta($post_id, 'wp_gp_location', $location);
 						
 						// Try to geolocate
 						$obj = json_decode(file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($location) . '&sensor=true'));
@@ -164,27 +141,13 @@ if(!class_exists('WP_Geo_Posts'))
 								if(empty($latitude))
 								{
 									$latitude 	= $obj->results[0]->geometry->location->lat;
-									$wpdb->insert( 
-										$wpdb->postmeta, 
-										array( 
-											'post_id' 		=> $post_id, 
-											'meta_key' 		=> 'wp_gp_latitude',
-											'meta_value' 	=> (string)$latitude 
-										)
-									);
+									update_post_meta($post_id, 'wp_gp_latitude', (string)$latitude);
 								}
 				
 								if(empty($longitude))
 								{
 									$longitude 	= $obj->results[0]->geometry->location->lng;
-									$wpdb->insert( 
-										$wpdb->postmeta, 
-										array( 
-											'post_id' 		=> $post_id, 
-											'meta_key' 		=> 'wp_gp_longitude',
-											'meta_value' 	=> $longitude 
-										)
-									);
+									update_post_meta($post_id, 'wp_gp_longitude', (string)$longitude);
 								}
 							}
 							catch(Exception $e) {/*die($e->getMessage());*/}
@@ -199,6 +162,7 @@ if(!class_exists('WP_Geo_Posts'))
 		 */
 		public function init()
 		{
+			add_action('save_post', array(&$this, 'save_post'));
 			// Import WP_GeoQuery class
 			require_once(sprintf("%s/query.php", dirname(__FILE__)));
 		} // END public static function activate
