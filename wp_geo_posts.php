@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP GeoPosts
-Plugin URI: https://github.com/fyaconiello/wp-geo-posts
+Plugin URI: http://fyaconiello.github.com/wp-geo-posts/
 Description: A simple wordpress plugin for adding geodata to posts
 Version: 1.0
 Author: Francis Yaconiello
