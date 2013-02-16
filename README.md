@@ -8,10 +8,10 @@ A simple Wordpress plugin for adding geographic data to posts.
 1. Adds `location`, `latitude`, and `longitude` meta + metaboxes to any content type.
 2. Provides an easy to use interface for selecting which content types to apply the above meta values. *Note: this allows selection of built in types: page and post as well as any registered custom post types.*
 3. Provides `WP_GeoQuery` an extended `WP_Query` class for doing distance based and geo-aware queries.
+4. Has support for `within radius` option to WP_GeoQuery
 
 #####Coming Soon!
 
-* Add support for `within radius` option to WP_GeoQuery
 * `Get Directions` link (utilizing Google Maps)
 * Custom Markers by post type.
 * Shortags for:
@@ -53,6 +53,7 @@ Make a geo-aware query against the posts table. `WP_GeoQuery` accepts all argume
 $query = new WP_GeoQuery(array(
   'latitude' => '37.5160', // User's Latitude (optional)
   'longitude' => '-77.5005', // User's Longitude (optional)
+  'radius' => 25, // Radius to select for in miles (optional)
   'posts_per_page' => 25, // Any regular options available via WP_Query
 ));
 foreach($query->posts as $post)
