@@ -8,6 +8,7 @@ if(!class_exists('WP_GeoQuery'))
 	{
 		private $_search_latitude = NULL;
 		private $_search_longitude = NULL;
+		private $_radius = NULL;
 		
 		/**
 		 * Constructor - adds necessary filters to extend Query hooks
@@ -24,16 +25,43 @@ if(!class_exists('WP_GeoQuery'))
 			{
 				$this->_search_longitude = $args['longitude'];
 			}
+			// Extract Longitude
+			if(!empty($args['radius']))
+			{
+				$this->_radius = $args['radius'];
+			}
 			// unset lat/long
-			unset($args['latitude'], $args['longitude']);
+			unset($args['latitude'], $args['longitude'], $args['radius']);
 			
 			add_filter('posts_fields', array(&$this, 'posts_fields'), 10, 2);
 			add_filter('posts_join', array(&$this, 'posts_join'), 10, 2);
 			add_filter('posts_where', array(&$this, 'posts_where'), 10, 2);
 			add_filter('posts_orderby', array(&$this, 'posts_orderby'), 10, 2);
+            add_filter('posts_distinct', array(&$this, 'posts_distinct'), 10, 2);
+            
+            // If post_type is not specified limit query only to geoquery post types
+            if(empty($args['post_type']))
+            {
+                $args['post_type'] = array();
+                $geo_post_types = get_option('geo_post_types');
+                if(!empty($geo_post_types))
+                {
+                	// Get all of the selected post types
+                	$geo_post_types = json_decode($geo_post_types);
+                	$args['post_type'] = $geo_post_types;
+                }
+            }
 
 			parent::query($args);
 		} // END public function __construct($args = array())
+		
+		/**
+		 * Return only distinct results
+		 */
+		function posts_distinct()
+		{
+            return "DISTINCT";
+        } // END public function posts_distinct()
 
 		/**
 		 * Selects the distance from a haversine formula
@@ -82,6 +110,14 @@ if(!class_exists('WP_GeoQuery'))
 			$where .= ' AND latitude.meta_key="wp_gp_latitude" ';
 			$where .= ' AND longitude.meta_key="wp_gp_longitude" ';
 			$where .= ' AND location.meta_key="wp_gp_location" ';
+			
+			if(!empty($this->_search_latitude) && !empty($this->_search_longitude) && !empty($this->_radius))
+			{
+			    if(is_numeric($this->_radius))
+			    {
+        			$where .= sprintf(' HAVING distance <= %s ', $this->_radius);
+			    }
+			}
 			
 			return $where;
 		} // END public function posts_where($where)

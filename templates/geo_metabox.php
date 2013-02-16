@@ -11,7 +11,7 @@
 	</tr>
 </table>	
 <style>
-#wp_gp_location 				{ width:100%; }
-.metabox_label_column 	{ width:125px; text-align:left; }
+#wp_gp_location { width:100%; }
+.metabox_label_column { width:125px; text-align:left; }
 .metabox_label_column label	{ padding-left:15px; }
 </style>
