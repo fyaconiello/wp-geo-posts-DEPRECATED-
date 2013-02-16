@@ -9,19 +9,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Wp-geo-posts</title>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34218466-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>    
   </head>
 
   <body>
@@ -48,13 +35,6 @@
 
 <p>A simple Wordpress plugin for adding geographic data to posts.</p>
 
-<p>If you find this useful, Donate!</p>
-              <form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                <img style="display:none;" alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-              </form>
-
 <h4>Features</h4>
 
 <ol>
@@ -62,10 +42,8 @@
 <li>Provides an easy to use interface for selecting which content types to apply the above meta values. <em>Note: this allows selection of built in types: page and post as well as any registered custom post types.</em>
 </li>
 <li>Provides <code>WP_GeoQuery</code> an extended <code>WP_Query</code> class for doing distance based and geo-aware queries.</li>
-<li>Has support for <code>within radius</code> option on WP_GeoQuery</li>
-</ol>
-
-<h5>Coming Soon!</h5>
+<li>Has support for querying within a <code>radius</code> using WP_GeoQuery</li>
+</ol><h5>Coming Soon!</h5>
 
 <ul>
 <li>
@@ -115,10 +93,11 @@
 
 <p>Make a geo-aware query against the posts table. <code>WP_GeoQuery</code> accepts all arguments that <code>WP_Query</code> takes. <code>latitude</code> and <code>longitude</code> are optional parameters. If passed, <code>distance</code> is calculated and returned with each result. In addition to the regular fields, each result returns <code>latitude</code>, <code>longitude</code>, and <code>location</code>.</p>
 
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WP_GeoQuery</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
   <span class="s1">'latitude'</span> <span class="o">=&gt;</span> <span class="s1">'37.5160'</span><span class="p">,</span> <span class="c1">// User's Latitude (optional)</span>
   <span class="s1">'longitude'</span> <span class="o">=&gt;</span> <span class="s1">'-77.5005'</span><span class="p">,</span> <span class="c1">// User's Longitude (optional)</span>
+  <span class="s1">'radius'</span> <span class="o">=&gt;</span> <span class="s1">'25'</span><span class="p">,</span> <span class="c1">// Radius from the lat/long above in miles (optional)</span>
   <span class="s1">'posts_per_page'</span> <span class="o">=&gt;</span> <span class="mi">25</span><span class="p">,</span> <span class="c1">// Any regular options available via WP_Query</span>
 <span class="p">));</span>
 <span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span>
