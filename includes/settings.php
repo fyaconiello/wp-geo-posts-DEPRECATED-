@@ -51,7 +51,7 @@ if(!class_exists('WP_GeoPostsSettings'))
 			// Get the default value for the select box
 			$args = array(
 				'public'   => true,
-				'_builtin' => true
+				//'_builtin' => true
 			);
 			$post_type_bank	= get_post_types($args, 'names', 'and');
 			if(($key = array_search('attachment', $post_type_bank)) !== false)
