@@ -9,8 +9,8 @@ if(!class_exists('WP_GeoPostsSettings'))
 		public function __construct()
 		{
 			// register actions
-            add_action('admin_init', array(&$this, 'admin_init'));
-        	add_action('admin_menu', array(&$this, 'add_menu'));
+            add_action('admin_init', array($this, 'admin_init'));
+        	add_action('admin_menu', array($this, 'add_menu'));
 		} // END public function __construct
 		
         /**
@@ -34,7 +34,7 @@ if(!class_exists('WP_GeoPostsSettings'))
         	    'WP GeoPosts', 
         	    'manage_options', 
         	    'wp_geo_posts', 
-        	    array(&$this, 'plugin_settings_page')
+        	    array($this, 'plugin_settings_page')
         	);
         } // END public function add_menu()
     

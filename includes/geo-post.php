@@ -9,8 +9,8 @@ if(!class_exists('WP_GeoPost'))
 		public function __construct()
 		{
 			// register actions
-			add_action('init', array(&$this, 'init'));
-			add_action('admin_init', array(&$this, 'admin_init'));
+			add_action('init', array($this, 'init'));
+			add_action('admin_init', array($this, 'admin_init'));
 	    } // END public function __construct()
 
 		/**
@@ -19,7 +19,7 @@ if(!class_exists('WP_GeoPost'))
 		public function init()
 		{
 		    // on geo post save callback
-			add_action('save_post', array(&$this, 'save_post'));
+			add_action('save_post', array($this, 'save_post'));
 		} // END public static function activate
 
 		/**
@@ -28,7 +28,7 @@ if(!class_exists('WP_GeoPost'))
 		public function admin_init()
 		{
 			// Add metaboxes
-			add_action('add_meta_boxes', array(&$this, 'add_meta_boxes'));
+			add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
 		} // END public static function activate
 
 		/**
@@ -47,7 +47,7 @@ if(!class_exists('WP_GeoPost'))
 					add_meta_box( 
 						'id_wp_geo_posts_section',
 						'Geographic Information',
-						array(&$this, 'add_inner_meta_boxes'),
+						array($this, 'add_inner_meta_boxes'),
 						$post_type
 		    	);					
 				} // END foreach($geo_post_types as $post_type)
