@@ -1,3 +1,5 @@
+#######B/C google puts rate limiting on the host IP, this solution won't work on shared hosts (probably)
+
 wp-geo-posts
 ============
 
