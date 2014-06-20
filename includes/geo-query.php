@@ -36,6 +36,7 @@ if(!class_exists('WP_GeoQuery'))
 			add_filter('posts_fields', array($this, 'posts_fields'), 10, 2);
 			add_filter('posts_join', array($this, 'posts_join'), 10, 2);
 			add_filter('posts_where', array($this, 'posts_where'), 10, 2);
+			add_filter('posts_groupby', array($this, 'posts_groupby'), 10, 2);
 			add_filter('posts_orderby', array($this, 'posts_orderby'), 10, 2);
             add_filter('posts_distinct', array($this, 'posts_distinct'), 10, 2);
 
@@ -59,6 +60,7 @@ if(!class_exists('WP_GeoQuery'))
 			remove_filter('posts_fields', array($this, 'posts_fields'));
 			remove_filter('posts_join', array($this, 'posts_join'));
 			remove_filter('posts_where', array($this, 'posts_where'));
+			remove_filter('posts_groupby', array($this, 'posts_groupby'));
 			remove_filter('posts_orderby', array($this, 'posts_orderby'));
             remove_filter('posts_distinct', array($this, 'posts_distinct'));
 
@@ -119,7 +121,7 @@ if(!class_exists('WP_GeoQuery'))
 			$where .= ' AND latitude.meta_key="wp_gp_latitude" ';
 			$where .= ' AND longitude.meta_key="wp_gp_longitude" ';
 			$where .= ' AND location.meta_key="wp_gp_location" ';
-
+/*
 			if(!empty($this->_search_latitude) && !empty($this->_search_longitude) && !empty($this->_radius))
 			{
 			    if(is_numeric($this->_radius))
@@ -127,10 +129,25 @@ if(!class_exists('WP_GeoQuery'))
         			$where .= sprintf(' HAVING distance <= %s ', $this->_radius);
 			    }
 			}
-
+*/
 			return $where;
 		} // END public function posts_where($where)
 
+		/**
+		 * Adds where clauses to compliment joins
+		 */
+		public function posts_groupby($groupby)
+		{
+			if(!empty($this->_search_latitude) && !empty($this->_search_longitude) && !empty($this->_radius))
+			{
+			    if(is_numeric($this->_radius))
+			    {
+        			$groupby = $groupby . sprintf(' HAVING distance <= %s ', $this->_radius);
+			    }
+			}
+
+			return $groupby;
+		} // END public function posts_where($where)
 		/**
 		 * Adds where clauses to compliment joins
 		 */
