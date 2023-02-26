@@ -1,18 +1,23 @@
-#######B/C google puts rate limiting on the host IP, this solution won't work on shared hosts (probably)
+[DEPRECATED] - Please do not use this repo as-is
+
+Notes: 
+
+- Google puts rate limiting on the host IP, this solution may not work well on shared hosts
+- The google geocoding api has changed
 
 wp-geo-posts
 ============
 
 A simple Wordpress plugin for adding geographic data to posts.
 
-####Features
+#### Features
 
 1. Adds `location`, `latitude`, and `longitude` meta + metaboxes to any content type.
 2. Provides an easy to use interface for selecting which content types to apply the above meta values. *Note: this allows selection of built in types: page and post as well as any registered custom post types.*
 3. Provides `WP_GeoQuery` an extended `WP_Query` class for doing distance based and geo-aware queries.
 4. Has support for `within radius` option to WP_GeoQuery
 
-#####Coming Soon!
+##### Coming Soon!
 
 * `Get Directions` link (utilizing Google Maps)
 * Custom Markers by post type.
@@ -22,21 +27,21 @@ A simple Wordpress plugin for adding geographic data to posts.
   * Option to show radius as overlay
   * Show one or more posts
 
-####Installation
+#### Installation
 
 1. Upload the entire `wp-geo-posts` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the `Plugins` menu in WordPress.
 
-####Setup
+#### Setup
 
 1. Click the `Settings` link on the plugin management page **OR** click the `WP GeoPosts` link from the Settings flyout menu.
 2. Generate a Google Maps API Key and enter it into the provided text input. *Note: this is optional and used for Google Maps API calls.*
 3. Select all of the content types that you wish to attach georelated content from the leftmost bank of choices and move them to the rightmost column.
 4. Submit the Form by clicking `Save Changes`.
 
-####Usage
+#### Usage
 
-#####Metaboxes
+##### Metaboxes
 
 For every post type selected on the plugin settings page. That type's add/edit screens will have an additional metabox automatically added. Metadata that is added to each record:
 
@@ -46,7 +51,7 @@ For every post type selected on the plugin settings page. That type's add/edit s
 
 Latitude and Longitude are readonly attributes of the metabox. Their values are automatically generated on  save via a call to Google's geoencoding api. 
 
-#####WP_GeoQuery Usage
+##### WP_GeoQuery Usage
 
 Make a geo-aware query against the posts table. `WP_GeoQuery` accepts all arguments that `WP_Query` takes. `latitude` and `longitude` are optional parameters. If passed, `distance` is calculated and returned with each result. In addition to the regular fields, each result returns `latitude`, `longitude`, and `location`.
 
